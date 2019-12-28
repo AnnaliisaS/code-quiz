@@ -1,3 +1,14 @@
+let time = 75;
+var timer = setInterval(function() {
+    if(time>0) {
+        time--;
+        document.getElementById('time').textContent = time;
+    } else {
+        document.getElementById('time').textContent = "Time's up!"
+        clearInterval(timer);
+    }
+    }, 1000);
+
 const questions = [
     {
         question: 'JavaScript is what kind of language?',
