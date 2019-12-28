@@ -1,0 +1,15 @@
+#intro {
+    border-style: groove;
+    text-align: center;
+    padding: 4%;
+}
+
+.nav-link {
+    border-style: double;
+    border-color: blue;
+    border-width: 5px;
+}
+
+#start {
+    background-color: greenyellow;
+}
