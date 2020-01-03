@@ -1,6 +1,6 @@
-const quizContainer = document.getElementById("quiz");
-const resultsContainer = document.getElementById("results");
-const submitButton = document.getElementById("submit");
+const quizContainer = document.getElementById('quiz');
+const resultsContainer = document.getElementById('results');
+const submitButton = document.getElementById('submit');
 const myQuestions = [
   {
 question: 'JavaScript is what kind of language?',
@@ -55,20 +55,13 @@ answers: {
 ];
 
 function buildQuiz(){
-    // we'll need a place to store the HTML output
     const output = [];
-  
-    // for each question...
+    // for each question store the list of answer choices
     myQuestions.forEach(
       (currentQuestion, questionNumber) => {
-  
-        // we'll want to store the list of answer choices
         const answers = [];
-  
-        // and for each available answer...
+        //for each available answer add an HTML radio button
         for(letter in currentQuestion.answers){
-  
-          // ...add an HTML radio button
           answers.push(
             `<label>
               <input type="radio" name="question${questionNumber}" value="${letter}">
@@ -77,75 +70,59 @@ function buildQuiz(){
             </label>`
           );
         }
-  
-        // add this question and its answers to the output
+        // add question and its answers to the output
         output.push(
           `<div class="question"> ${currentQuestion.question} </div>
           <div class="answers"> ${answers.join('')} </div>`
         );
       }
     );
-  
-    // finally combine our output list into one string of HTML and put it on the page
+    //output list into string of HTML and put it on the page
     quizContainer.innerHTML = output.join('');
   }
   
   function showResults(){
-
     // gather answer containers from our quiz
     const answerContainers = quizContainer.querySelectorAll('.answers');
-  
-    // keep track of user's answers
-    let numCorrect = 0;
-  
-    // for each question...
+    // keep track of user's score
+    let score = 0;
+    // for each question find selected answer
     myQuestions.forEach( (currentQuestion, questionNumber) => {
-  
-      // find selected answer
       const answerContainer = answerContainers[questionNumber];
       const selector = 'input[name=question'+questionNumber+']:checked';
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-  
-      // if answer is correct
+      // if answer is correct give points
       if(userAnswer===currentQuestion.correctAnswer){
-        // add to the number of correct answers
-        numCorrect++;
-  
-        // color the answers green
-        answerContainers[questionNumber].style.color = 'lightgreen';
+        score+=15;
       }
-      // if answer is wrong or blank
+      // if answer is wrong or blank color the answers red
       else{
-        // color the answers red
         answerContainers[questionNumber].style.color = 'red';
       }
     });
-  
-    // show number of correct answers out of total
-    resultsContainer.innerHTML = numCorrect + ' out of ' + myQuestions.length;
+    // show score out of total
+    document.getElementById('score').innerHTML = 'Your score: ' + score;
   }
   
-
- 
+  //button to start the quiz and hide intro div
   let button = document.getElementById('start');
 
   button.addEventListener('click', function () {
-      event.preventDefault();
-      document.querySelector('#intro').setAttribute('hidden', true); 
-          // display quiz right away
- buildQuiz();   
-  
- // on submit, show results
- submitButton.addEventListener("click", showResults);
-
-      let time = 75;
-      var timer = setInterval(function () {
-          if (time > 0) {
-              time--;
-              document.getElementById('time').textContent = time;
-          } else {
-              document.getElementById('time').textContent = "Time's up!"
-              clearInterval(timer);
-          }
-      }, 1000);
+    event.preventDefault(); 
+    document.querySelector('#intro').setAttribute('hidden', true); 
+          //starts the timer, and clears interval after countdown is done
+          let time = 75;
+          var timer = setInterval(function () {
+              if (time > 0) {
+                  time--;
+                  document.getElementById('time').textContent = 'Time remaining: ' + time;
+              } else {
+                  document.getElementById('time').textContent = "Time's up!"
+                  clearInterval(timer);
+              }
+          }, 1000);
+      //calls function to generate the quiz after start button is clicked
+      buildQuiz();   
+    // on submit, show results
+    submitButton.addEventListener('click', showResults);
   })
