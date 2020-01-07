@@ -1,4 +1,4 @@
-
+let time = 75;
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
 const submitButton = document.getElementById('submit');
@@ -55,6 +55,7 @@ answers: {
   }
 ];
 
+
 function buildQuiz(){
     const output = [];
     // for each question store the list of answer choices
@@ -91,29 +92,44 @@ function buildQuiz(){
       myQuestions.forEach( (currentQuestion, questionNumber) => {
       const answerContainer = answerContainers[questionNumber];
       const selector = 'input[name=question'+questionNumber+']:checked';
-      const userAnswer = (answerContainer.querySelector(selector)).value;
+      const userAnswer = (answerContainer.querySelector(selector).value);
       // if answer is correct give points and color green
       if(userAnswer===currentQuestion.correctAnswer){
         score+=15;
+        function bonusPoints(){
+          if(time>60){
+            score+=30;
+          }
+          else if(time>50){
+            score+=20;
+          }
+          else {
+            score+=15;
+          } 
+        }
+        bonusPoints();
         answerContainers[questionNumber].style.color = 'green'
       }
       // if answer is wrong take away points and color red
       else{
         score-=10;
         answerContainers[questionNumber].style.color = 'red';
+          time-=15;
     };
-    // show score out of total
+    // show score in nav bar
     document.getElementById('score').innerHTML = 'Your score: ' + score;
+    // shows score at end of quiz
+    document.getElementById('results').innerHTML = 'Your score: ' + score;
       });
 };
   //button to start the quiz and hide intro div
   let button = document.getElementById('start');
 
+
   button.addEventListener('click', function () {
     event.preventDefault(); 
     document.querySelector('#intro').setAttribute('hidden', true); 
           //starts the timer, and clears interval after countdown is done
-          let time = 75;
           var timer = setInterval(function () {
               if (time > 0) {
                   time--;
@@ -130,6 +146,6 @@ function buildQuiz(){
       time = 0;
       document.getElementById('time').textContent = time;
       clearInterval(timer);
-      // showResults()
+      document.getElementById('quiz').setAttribute('hidden', true);
     });
   })
