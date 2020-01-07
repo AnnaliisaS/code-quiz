@@ -1,3 +1,4 @@
+
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
 const submitButton = document.getElementById('submit');
@@ -64,7 +65,7 @@ function buildQuiz(){
         for(letter in currentQuestion.answers){
           answers.push(
             `<label>
-              <input type="radio" name="question${questionNumber}" value="${letter}">
+              <input type="radio" name="question${questionNumber}" value="${letter}" onclick="showResults()">
               ${letter} :
               ${currentQuestion.answers[letter]}
             </label>`
@@ -82,28 +83,29 @@ function buildQuiz(){
   }
   
   function showResults(){
-    // gather answer containers from our quiz
+    // gather answer containers from quiz
     const answerContainers = quizContainer.querySelectorAll('.answers');
     // keep track of user's score
     let score = 0;
     // for each question find selected answer
-    myQuestions.forEach( (currentQuestion, questionNumber) => {
+      myQuestions.forEach( (currentQuestion, questionNumber) => {
       const answerContainer = answerContainers[questionNumber];
       const selector = 'input[name=question'+questionNumber+']:checked';
-      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-      // if answer is correct give points
+      const userAnswer = (answerContainer.querySelector(selector)).value;
+      // if answer is correct give points and color green
       if(userAnswer===currentQuestion.correctAnswer){
         score+=15;
+        answerContainers[questionNumber].style.color = 'green'
       }
-      // if answer is wrong or blank color the answers red
+      // if answer is wrong take away points and color red
       else{
+        score-=10;
         answerContainers[questionNumber].style.color = 'red';
-      }
-    });
+    };
     // show score out of total
     document.getElementById('score').innerHTML = 'Your score: ' + score;
-  }
-  
+      });
+};
   //button to start the quiz and hide intro div
   let button = document.getElementById('start');
 
@@ -124,5 +126,10 @@ function buildQuiz(){
       //calls function to generate the quiz after start button is clicked
       buildQuiz();   
     // on submit, show results
-    submitButton.addEventListener('click', showResults);
+    submitButton.addEventListener('click', function() {
+      time = 0;
+      document.getElementById('time').textContent = time;
+      clearInterval(timer);
+      // showResults()
+    });
   })
