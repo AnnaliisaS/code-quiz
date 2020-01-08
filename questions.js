@@ -118,17 +118,24 @@ function buildQuiz(){
     };
     // show score in nav bar
     document.getElementById('score').innerHTML = 'Your score: ' + score;
-    // shows score at end of quiz
+    // shows score at end of quiz and hides quiz when out of time
     document.getElementById('results').innerHTML = 'Your score: ' + score;
     if(time<=0) {
       document.getElementById('quiz').setAttribute('hidden', true);
     }
+    //sets score in local storage
+    localStorage.setItem('score', score);
+
       });
 };
+//way to save player initials to local storage with the score that is saved
+function scoring() {
+ var initials = prompt('User initials: ');
+  initials = localStorage.setItem('initials', initials);
+}
+
   //button to start the quiz and hide intro div
   let button = document.getElementById('start');
-
-
   button.addEventListener('click', function () {
     event.preventDefault(); 
     document.querySelector('#intro').setAttribute('hidden', true); 
@@ -150,5 +157,6 @@ function buildQuiz(){
       document.getElementById('time').textContent = time;
       clearInterval(timer);
       document.getElementById('quiz').setAttribute('hidden', true);
+      scoring();
     });
   })
