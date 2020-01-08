@@ -55,6 +55,7 @@ answers: {
   }
 ];
 
+document.getElementById('submit').setAttribute('hidden', true);
 
 function buildQuiz(){
     const output = [];
@@ -125,7 +126,6 @@ function buildQuiz(){
     }
     //sets score in local storage
     localStorage.setItem('score', score);
-
       });
 };
 //way to save player initials to local storage with the score that is saved
@@ -139,12 +139,15 @@ function scoring() {
   button.addEventListener('click', function () {
     event.preventDefault(); 
     document.querySelector('#intro').setAttribute('hidden', true); 
+    document.getElementById('submit').removeAttribute('hidden', true);
           //starts the timer, and clears interval after countdown is done
           var timer = setInterval(function () {
               if (time > 0) {
                   time--;
                   document.getElementById('time').textContent = 'Time remaining: ' + time;
               } else {
+                  document.getElementById('submitButton').setAttribute('hidden', true);
+                  scoring();
                   document.getElementById('time').textContent = "Time's up!"
                   clearInterval(timer);
               }
@@ -153,6 +156,7 @@ function scoring() {
       buildQuiz();   
     // on submit, show results
     submitButton.addEventListener('click', function() {
+      document.getElementById('submit').setAttribute('hidden', true);
       time = 0;
       document.getElementById('time').textContent = time;
       clearInterval(timer);
