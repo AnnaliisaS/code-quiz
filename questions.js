@@ -172,7 +172,8 @@ scorebtn.addEventListener('click', function(){
           }, 1000);
       //calls function to generate the quiz after start button is clicked
       buildQuiz();   
-    // on submit, show results
+    // on submit, show results - allows user to zero timer to continue to results instead of waiting
+    // if there is still significant time left
     submitButton.addEventListener('click', function() {
       document.getElementById('submit').setAttribute('hidden', true);
       time = 0;
