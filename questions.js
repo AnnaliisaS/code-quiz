@@ -120,6 +120,9 @@ function buildQuiz(){
     document.getElementById('score').innerHTML = 'Your score: ' + score;
     // shows score at end of quiz
     document.getElementById('results').innerHTML = 'Your score: ' + score;
+    if(time<=0) {
+      document.getElementById('quiz').setAttribute('hidden', true);
+    }
       });
 };
   //button to start the quiz and hide intro div
