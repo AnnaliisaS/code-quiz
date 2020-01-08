@@ -1,3 +1,8 @@
+//Timer still buggy after incorrect answers are selected, but functional.
+//high scores only store the one entry in local storage, but managed to get
+// user initials and score to be stored and retrieved once - for me that was a victory
+// Probably the worst thing I've turned in yet, but I am done fighting with it for now. 
+//Will revisit this assignment again at a later date to fix. 
 let time = 75;
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
@@ -124,15 +129,15 @@ function buildQuiz(){
     if(time<=0) {
       document.getElementById('quiz').setAttribute('hidden', true);
     }
-    //sets score in local storage
+    //sets score in local storage - had issues accessing score value elsewhere
     localStorage.setItem('score', score);
       });
 };
 //way to save player initials to local storage with the score that is saved
 //currently only stores the latest initials and score - haven't made it to where
-// I can append the array yet. 
+// I can append yet. 
 function scoring() {
- var initials = prompt('User initials: ');
+ var initials = prompt('Enter your initials: ');
   initials = localStorage.setItem('initials', initials);
   var highScore = (localStorage.getItem('initials', initials) + ' : ' + localStorage.getItem('score', score));
   var scoreArray = [highScore]
