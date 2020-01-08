@@ -7,6 +7,7 @@
 
 #results {
     text-align: center;
+    font-size: xx-large;
     color: blue;
 }
 
@@ -29,4 +30,8 @@
 
  body {
      background-color: white;
+ }
+ div {
+     margin-left: 2%;
+     margin-right: 2%;
  }

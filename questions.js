@@ -129,11 +129,24 @@ function buildQuiz(){
       });
 };
 //way to save player initials to local storage with the score that is saved
+//currently only stores the latest initials and score - haven't made it to where
+// I can append the array yet. 
 function scoring() {
  var initials = prompt('User initials: ');
   initials = localStorage.setItem('initials', initials);
+  var highScore = (localStorage.getItem('initials', initials) + ' : ' + localStorage.getItem('score', score));
+  var scoreArray = [highScore]
+  document.getElementById('hscore').innerHTML = scoreArray;
 }
+//hides the highscore div until nav link clicked
+document.getElementById('hscore').setAttribute('hidden', true);
 
+//when highscore nav button is clicked it now shows the div where highscores are written to
+let scorebtn = document.getElementById('sc-btn');
+scorebtn.addEventListener('click', function(){
+  document.getElementById('hscore').removeAttribute('hidden', true);
+  document.getElementById('hscore').setAttribute('display', true);
+})
   //button to start the quiz and hide intro div
   let button = document.getElementById('start');
   button.addEventListener('click', function () {
